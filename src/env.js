@@ -10,7 +10,7 @@ export const env = createEnv({
     DATABASE_URL: z
       .string()
       .refine(
-        (str) => !str.includes("YOUR_MYSQL_URL_HERE"),
+        (str) => !str.includes("file:./db.sqlite"),
         "You forgot to change the default URL"
       ),
     NODE_ENV: z
