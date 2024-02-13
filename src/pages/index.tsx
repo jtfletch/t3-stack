@@ -1,4 +1,5 @@
-import { SignInButton, SignIn } from "@clerk/nextjs";
+import { SignInButton, SignIn, SignOutButton, useUser } from "@clerk/nextjs";
+import { Sign } from "crypto";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -6,6 +7,8 @@ import { api } from "~/utils/api";
 
 export default function Home() {
   const hello = api.post.hello.useQuery({ text: "from tRPC" });
+
+  const user = useUser();
 
   return (
     <>
@@ -16,7 +19,7 @@ export default function Home() {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div>
-          <SignInButton />
+          {!user.isSignedIn && <SignInButton/>}{!!user.isSignedIn && <SignOutButton />}
         </div>
         <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
       </main>
